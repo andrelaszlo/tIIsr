@@ -1,0 +1,16 @@
+System packages:
+
+extra/python-dbus
+extra/python2-gobject2
+extra/vorbis-tools (ogg)
+extra/lame (mp3)
+
+Python packages:
+
+requests
+
+index=$(pacmd list-sink-inputs | grep -B50 -i spotify | grep index | tail -n1 | cut -f2 -d: | tr -d " ")
+pactl load-module module-null-sink sink_name=steam
+pactl move-sink-input $index steam
+parec -d steam.monitor | oggenc -b 192 -o steam.ogg --raw -
+parec -d dump.monitor | lame -r --vbr-new - stream.mp3
