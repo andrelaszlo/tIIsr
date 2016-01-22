@@ -1,5 +1,3 @@
-#!/bin/env python2
-
 import glib
 import dbus
 from pprint import pprint

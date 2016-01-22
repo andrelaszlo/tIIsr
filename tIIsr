@@ -1,0 +1,9 @@
+#!/bin/bash
+
+PYTHON="$(which python2 2> /dev/null)"
+
+if [ ! -x "$PYTHON" ]; then
+   PYTHON="python"
+fi
+
+$PYTHON ./src/tiisr.py $@
