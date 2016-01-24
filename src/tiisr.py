@@ -53,11 +53,15 @@ def get_encoder(enc):
         return "lame -r --vbr-new - {filename}"
     if enc == 'ogg':
         return "oggenc -b 192 -o {filename} --raw -"
-    return enc
+    if enc == 'flac':
+        return "flac -5 -o {filename} --endian=little --sign=signed --channels=2 --sample-rate=44100 --bps=16 -"
+    if enc == 'raw':
+        return "dd of={filename} bs=512"
+    return enc.replace('__', ' ')
 
 
 def get_ext(enc):
-    if enc in ('mp3', 'ogg'):
+    if enc in ('mp3', 'ogg', 'flac', 'raw'):
         return enc
     return 'mp3'
 
@@ -67,7 +71,7 @@ def main(args, log):
 
     encoder = get_encoder(args.encoder)
     log.debug("Encoder set to: %s" % encoder)
-    ext = args.extension if args.extension else get_ext(args.encoder)
+    ext = args.extension.strip('.') if args.extension else get_ext(args.encoder)
     log.debug("Using extension: .%s" % ext)
     recorder = Recorder(log, get_sink_by_name(args.program), encoder, ext)
     message_filter = partial(notifications, recorder, log)
@@ -95,8 +99,10 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '-e', '--encoder', default='mp3',
-        help='Program used for encoding the stream. Valid values are ogg or ' +
-        'mp3, but it can also be a command like: lame -r --vbr-new - {filename}'
+        help='Program used for encoding the stream. ' +
+        'Valid values are ogg, mp3, flac and raw, ' +
+        'but it can also be a command like: lame__-r__--vbr-new__-__{filename}' +
+        ', note that spaces have to be replaced by __'
     )
 
     parser.add_argument('-d', '--debug', action='store_true', default=False,
@@ -105,7 +111,7 @@ if __name__ == '__main__':
     parser.add_argument('-p', '--program', required=True,
                         help='Record the output of this program, for example "vlc"')
 
-    parser.add_argument('--extension', default=None, help="File extension")
+    parser.add_argument('--extension', default=None, help="File extension, eg mp3")
 
     args = parser.parse_args()
 

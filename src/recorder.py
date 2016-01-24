@@ -4,7 +4,7 @@ import subprocess
 from signal import SIGINT
 
 class Recorder:
-    def __init__(self, logger, sink, encoder, extension="ogg"):
+    def __init__(self, logger, sink, encoder, extension):
         self.log = logger
         self._sink = sink
         self._metadata = "Unknown song"

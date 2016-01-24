@@ -26,7 +26,7 @@ The program requires the following:
 
 * Python 2
 * PulseAudio
-* ogg or mp3 encoder
+* ogg, flac or mp3 encoder
 * D-Bus
 
 System packages (Arch Linux):
@@ -35,6 +35,7 @@ System packages (Arch Linux):
 * extra/python2-gobject2
 * extra/vorbis-tools (ogg)
 * extra/lame (mp3)
+* extra/flac (flac)
 
 # Todo
 
