@@ -5,6 +5,9 @@ from dbus.mainloop.glib import DBusGMainLoop
 import pdb
 import logging
 import argparse
+import signal
+import sys
+
 
 from banner import banner
 from metadata import Metadata
@@ -73,8 +76,17 @@ def main(args, log):
     bus.add_match_string_non_blocking("interface='org.freedesktop.DBus.Properties'")
     bus.add_message_filter(message_filter)
 
+    def signal_handler(signal, frame):
+        log.info('Bye bye!')
+        recorder.save()
+        sys.exit(0)
+    signal.signal(signal.SIGINT, signal_handler)
+
     mainloop = glib.MainLoop()
-    mainloop.run()
+    try:
+        mainloop.run()
+    except KeyboardInterrupt:
+        log.info('Shutting down')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -103,5 +115,5 @@ if __name__ == '__main__':
         if not line.strip(): continue
         log.info(line)
 
-    log.info('tIIsr started, waiting for a song to start')
+    log.info('tIIsr started, waiting for a song to start, press Ctrl-C to quit')
     main(args, log)
