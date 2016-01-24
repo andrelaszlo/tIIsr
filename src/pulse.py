@@ -1,21 +1,21 @@
+import os
 import subprocess
+from subprocess import CalledProcessError
 
-def get_sink_input_by_name(name):
-    """Returns the index of a sing given its binary name or None if no sink is
-    found.
+# This is how the redirection of sinks and sources are supposed to work
+# All programs (sink inputs) are using the default sink to begin with:
+#  +-------+    +----+
+#  |Program|--->|Sink|
+#  +-------+    +----+
+# When we find the sink used by the program, then we can start recording from it.
 
+def get_sink_by_name(name):
+    """Returns the name of the sink used by a program (sink input)
     """
-    cmd = ("pacmd list-sink-inputs" +
-           "| grep -B50 -i \"application.process.binary = \\\"%s\\\"\"" +
-           "| grep index" + 
-           "| tail -n1" +
-           "| cut -f2 -d:" +
-           "| tr -d \" \"") % name
-    index = subprocess.check_output(cmd, shell=True).strip()
-    try:
-        return int(index)
-    except ValueError:
-        return None
-
-if __name__ == '__main__':
-    print get_sink_input_by_name('vlc')
+    cmd = (r'pacmd list-sink-inputs' +
+           r'| grep -B50 "application.process.binary = \"%s\""' +
+           r'| grep sink:' +
+           r'| tail -n1' +
+           r'| sed "s/^.*<\(.*\)>$/\\1/"') % name
+    sink_name = subprocess.check_output(cmd, shell=True).strip()
+    return sink_name if sink_name else None

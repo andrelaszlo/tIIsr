@@ -23,3 +23,7 @@ class Metadata:
 
     def __str__(self):
         return "{} ({} #{}) - {}".format(self.artist, self.album, self.track_number, self.track)
+
+    def as_filename(self):
+        return "{}-{}-{}-{}".format(
+            self.artist, self.album, self.track_number, self.track)

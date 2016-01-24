@@ -5,6 +5,3 @@ extra/python2-gobject2
 extra/vorbis-tools (ogg)
 extra/lame (mp3)
 
-Python packages:
-
-requests
