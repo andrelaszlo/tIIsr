@@ -1,3 +1,14 @@
+```
+████████╗████╗████╗███████╗██████╗
+╚══██╔══╝╚██╔╝╚██╔╝██╔════╝██╔══██╗
+   ██║    ██║  ██║ ███████╗██████╔╝
+   ██║    ██║  ██║ ╚════██║██╔══██╗
+   ██║   ████╗████╗███████║██║  ██║
+   ╚═╝   ╚═══╝╚═══╝╚══════╝╚═╝  ╚═╝
+```
+
+[![asciicast](https://asciinema.org/a/26tb9uqv5h42611txkxm8chaw.png)](https://asciinema.org/a/26tb9uqv5h42611txkxm8chaw)
+
 Rips the audio output of a media player and encodes the output as mp3 or ogg
 (other formats are supported) and switches to a new file when the media player
 changes song. The media player needs to send updates over D-Bus on the
