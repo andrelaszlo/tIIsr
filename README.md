@@ -20,6 +20,25 @@ changes song. The media player needs to send updates over D-Bus on the
 * Install the requirements
 * Start ./tIIsr
 
+# Usage
+
+```
+usage: tiisr.py [-h] [-e ENCODER] [-d] -p PROGRAM [--extension EXTENSION]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -e ENCODER, --encoder ENCODER
+                        Program used for encoding the stream. Valid values are
+                        ogg, mp3, flac and raw, but it can also be a command
+                        like: lame__-r__--vbr-new__-__{filename}, note that
+                        spaces have to be replaced by __
+  -d, --debug           Enable debug logging
+  -p PROGRAM, --program PROGRAM
+                        Record the output of this program, for example "vlc"
+  --extension EXTENSION
+                        File extension, eg mp3
+```
+
 # Requirements
 
 The program requires the following:
