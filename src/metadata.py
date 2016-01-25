@@ -22,8 +22,8 @@ class Metadata:
         log.info('')
 
     def __str__(self):
-        return "{} ({} #{}) - {}".format(self.artist, self.album, self.track_number, self.track)
+        return u"{} ({} #{}) - {}".format(self.artist, self.album, self.track_number, self.track)
 
     def as_filename(self):
-        return "{}-{}-{}-{}".format(
+        return u"{}-{}-{}-{}".format(
             self.artist, self.album, self.track_number, self.track)
